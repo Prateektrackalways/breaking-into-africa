@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-sans bg-cream text-gray-800;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gold hover:bg-gold-dark text-white font-bold px-8 py-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:scale-95;
+  }
+  .btn-outline {
+    @apply border-2 border-forest text-forest hover:bg-forest hover:text-white font-semibold px-6 py-2.5 rounded-lg transition-all duration-200;
+  }
+  .input-field {
+    @apply w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-forest focus:border-transparent bg-white text-gray-800 placeholder-gray-400 transition;
+  }
+  .callout-green {
+    @apply bg-green-50 border-l-4 border-forest rounded-r-lg p-4 my-4;
+  }
+  .callout-gold {
+    @apply bg-amber-50 border-l-4 border-gold rounded-r-lg p-4 my-4;
+  }
+  .placeholder-block {
+    @apply bg-amber-50 border border-dashed border-gold rounded-lg p-4 my-4 text-amber-800 italic text-sm;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f1f1; }
+::-webkit-scrollbar-thumb { background: #1a4a2e; border-radius: 3px; }
+
+/* Progress bar animation */
+#progress-bar { transition: width 0.2s ease; }
