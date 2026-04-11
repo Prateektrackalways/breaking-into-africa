@@ -1,7 +1,12 @@
 const puppeteer = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
 
+// Cache the generated PDF in memory — regenerates only on server restart
+let _cachedPdf = null;
+
 async function generateEbookPdf() {
+  if (_cachedPdf) return _cachedPdf;
+
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
@@ -27,6 +32,7 @@ async function generateEbookPdf() {
   });
 
   await browser.close();
+  _cachedPdf = pdfBuffer;
   return pdfBuffer;
 }
 
@@ -35,10 +41,9 @@ async function generateEbookPdf() {
 // ─────────────────────────────────────────────
 const STYLES = `
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',Arial,'Noto Color Emoji','Segoe UI Emoji','Apple Color Emoji',sans-serif;color:#222;background:#fff;font-size:13px;line-height:1.7;}
-.stat-icon,.card-icon,.step-icon,.callout-icon,.tip-icon,.list-icon{font-family:'Noto Color Emoji','Segoe UI Emoji','Apple Color Emoji',sans-serif;}
+body{font-family:'Inter',Arial,sans-serif;color:#222;background:#fff;font-size:13px;line-height:1.7;}
+.stat-icon,.card-icon,.step-icon,.callout-icon,.tip-icon,.list-icon{font-family:'Segoe UI Emoji','Apple Color Emoji','Noto Emoji',sans-serif;}
 
 /* Cover */
 .cover{width:210mm;height:297mm;page-break-after:always;margin:-18mm -16mm;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0d1f13;}
@@ -146,8 +151,8 @@ td:first-child{font-weight:600;color:#1a4a2e;}
 const AFRICA_MAP_SVG = `
 <div style="margin:14px 0 20px;">
   <div style="font-size:14px;font-weight:700;color:#1a4a2e;margin-bottom:10px;">Africa — Regional Business Map</div>
-  <img src="https://guide.prateek.africa/assets/africa_map.jpg" alt="Africa Regional Business Map" style="width:100%;max-width:680px;display:block;margin:0 auto;border-radius:10px;border:1px solid #dde3ec;"/>
-  <div style="display:none;"><!-- old SVG replaced with image -->
+  <img src="https://guide.prateek.africa/assets/africa_map.jpg" alt="Africa Regional Business Map" style="width:100%;max-width:600px;display:block;margin:0 auto;border-radius:10px;border:1px solid #dde3ec;"/>
+  <div style="display:none;"><!-- SVG placeholder -->
   <svg viewBox="0 0 780 820" style="width:100%;max-width:680px;display:block;margin:0 auto;background:#eef2f7;border-radius:10px;border:1px solid #dde3ec;">
     <!-- NORTH AFRICA -->
     <polygon points="90,85 135,75 155,85 160,115 145,130 110,135 85,120 80,100" fill="#7b3fa0" stroke="white" stroke-width="0.8"/>

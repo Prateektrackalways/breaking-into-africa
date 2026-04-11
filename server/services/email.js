@@ -3,7 +3,8 @@ const { Resend } = require('resend');
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function sendWelcomeEmail(firstName, email) {
-  const pdfUrl = `${process.env.CLIENT_URL || 'https://guide.prateek.africa'}/download`;
+  const apiBase = process.env.API_URL || 'https://ebook-api-p981.onrender.com';
+  const pdfUrl = `${apiBase}/api/pdf/download?email=${encodeURIComponent(email)}`;
 
   await resend.emails.send({
     from: 'Prateek Jain <hello@prateek.africa>',
