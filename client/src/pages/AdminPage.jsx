@@ -465,35 +465,66 @@ function AnalyticsTab({ password }) {
         borderRadius: 12,
         padding: '24px 28px',
       }}>
-        <h3 style={{ color: C.cream, fontSize: 16, fontWeight: 700, margin: '0 0 10px' }}>
-          Connect Google Analytics
-        </h3>
-        <p style={{ color: C.muted, fontSize: 14, lineHeight: 1.75, margin: '0 0 16px' }}>
-          To get detailed analytics including visitor demographics, bounce rate, and traffic sources, connect Google Analytics 4:
-        </p>
-        <ol style={{ color: C.muted, fontSize: 14, lineHeight: 1.9, margin: '0 0 20px', paddingLeft: 20 }}>
-          <li>Go to <strong style={{ color: C.cream }}>analytics.google.com</strong> → Create property</li>
-          <li>Get your Measurement ID <strong style={{ color: C.cream }}>(G-XXXXXXXXXX)</strong></li>
-          <li>Add it to your Render environment variables as <code style={{ background: 'rgba(0,0,0,0.25)', borderRadius: 4, padding: '1px 6px', color: C.gold }}>VITE_GA_MEASUREMENT_ID</code></li>
-          <li>Your GA dashboard: <strong style={{ color: C.cream }}>analytics.google.com</strong></li>
-        </ol>
-        <a
-          href="https://analytics.google.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: 'inline-block',
-            background: C.gold,
-            color: C.bg,
-            padding: '10px 24px',
-            borderRadius: 8,
-            fontSize: 14,
-            fontWeight: 700,
-            textDecoration: 'none',
-          }}
-        >
-          Open Google Analytics →
-        </a>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
+          <div>
+            <h3 style={{ color: C.cream, fontSize: 16, fontWeight: 700, margin: '0 0 4px' }}>
+              Google Analytics 4 — Connected ✓
+            </h3>
+            <p style={{ color: C.muted, fontSize: 13, margin: 0 }}>
+              Measurement ID: <code style={{ background: 'rgba(0,0,0,0.25)', borderRadius: 4, padding: '2px 7px', color: C.gold, fontFamily: 'monospace' }}>G-YME8SLKRDT</code>
+              &nbsp;· Tracking all pages
+            </p>
+          </div>
+          <a
+            href="https://analytics.google.com/analytics/web/#/p492398706/reports/intelligenthome"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              background: C.gold,
+              color: C.bg,
+              padding: '10px 20px',
+              borderRadius: 8,
+              fontSize: 13,
+              fontWeight: 700,
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            Open GA Dashboard →
+          </a>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
+          {[
+            { label: 'Realtime Users', desc: 'See who\'s on the site right now', link: 'https://analytics.google.com/analytics/web/#/p492398706/reports/realtime', icon: '🟢' },
+            { label: 'Traffic Sources', desc: 'Where visitors are coming from', link: 'https://analytics.google.com/analytics/web/#/p492398706/reports/acquisition-overview', icon: '🔗' },
+            { label: 'Audience & Demographics', desc: 'Countries, devices, languages', link: 'https://analytics.google.com/analytics/web/#/p492398706/reports/user-demographics-overview', icon: '🌍' },
+            { label: 'Engagement', desc: 'Pages viewed, time on site', link: 'https://analytics.google.com/analytics/web/#/p492398706/reports/engagement-overview', icon: '📊' },
+          ].map(item => (
+            <a
+              key={item.label}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'block',
+                background: 'rgba(0,0,0,0.2)',
+                border: `1px solid ${C.border}`,
+                borderRadius: 8,
+                padding: '14px 16px',
+                textDecoration: 'none',
+                transition: 'border-color 0.15s',
+              }}
+              onMouseOver={e => e.currentTarget.style.borderColor = C.gold}
+              onMouseOut={e => e.currentTarget.style.borderColor = C.border}
+            >
+              <div style={{ fontSize: 18, marginBottom: 6 }}>{item.icon}</div>
+              <div style={{ color: C.cream, fontSize: 13, fontWeight: 600, marginBottom: 3 }}>{item.label}</div>
+              <div style={{ color: C.muted, fontSize: 11 }}>{item.desc}</div>
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );
