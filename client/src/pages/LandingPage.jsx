@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://ebook-api-p981.onrender.com').replace(/\/api$/, '');
 
 const COUNTRY_CODES = [
   { code: '+254', country: 'Kenya', flag: '🇰🇪' },
@@ -181,7 +181,7 @@ export default function LandingPage() {
               </div>
 
               {/* ── FORM ── */}
-              <form onSubmit={handleSubmit} className="space-y-3.5">
+              <form onSubmit={handleSubmit} noValidate className="space-y-3.5">
 
                 {/* Name + Email side by side on wider screens */}
                 <div className="grid sm:grid-cols-2 gap-3.5">
