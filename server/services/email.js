@@ -72,7 +72,7 @@ async function sendWelcomeEmail(firstName, email) {
           <!-- Footer -->
           <div class="footer">
             <a href="https://prateek.africa">prateek.africa</a> &nbsp;·&nbsp;
-            <a href="https://trackalways.com">trackalways.com</a>
+            <a href="https://trackalwaysafrica.com">trackalwaysafrica.com</a>
             <br/><br/>
             &copy; ${new Date().getFullYear()} Prateek Jain &nbsp;|&nbsp; You're receiving this because you requested the guide.
           </div>

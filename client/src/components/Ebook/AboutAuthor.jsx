@@ -21,7 +21,7 @@ export default function AboutAuthor() {
                 Prateek Jain is an entrepreneur, builder, and cross-border operator based in Nairobi, Kenya. Originally from Bhopal, India, he moved to East Africa to build businesses at the intersection of technology, logistics, and services.
               </p>
               <p>
-                He is the Director and co-owner of <strong>Trackalways Ltd.</strong>, a GPS tracking and telematics company operating across Kenya and Uganda, and runs <strong>Anasa Living</strong> (serviced apartments in Nairobi) and <strong>Code Crumble</strong> (web development and SaaS tools).
+                He is the Director and co-owner of <strong>Trackalways Ltd.</strong>, a GPS tracking and telematics company operating across Kenya and Uganda, and also runs <strong>Anasa Living</strong> (serviced apartments in Nairobi).
               </p>
               <p>
                 With experience spanning cloud kitchens, printing, fresh produce trade, IoT hardware, and SaaS platforms — across India, Africa, the UAE, and beyond — Prateek has navigated the real challenges of building in emerging markets: regulatory hurdles, cross-border payments, hiring, cultural adaptation, and finding product-market fit on the ground.
@@ -34,7 +34,7 @@ export default function AboutAuthor() {
             <div className="mt-6 flex flex-wrap gap-3">
               {[
                 { label: '🌍 prateek.africa', href: 'https://prateek.africa' },
-                { label: '📡 trackalways.com', href: 'https://trackalways.com' },
+                { label: '📡 trackalwaysafrica.com', href: 'https://trackalwaysafrica.com' },
               ].map(link => (
                 <a
                   key={link.label}
