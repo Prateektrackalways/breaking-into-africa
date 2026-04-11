@@ -9,27 +9,24 @@ export default function DownloadPage() {
 
   const hasAccess = sessionStorage.getItem('ebook_access') === 'true';
 
-  async function handleDownload() {
+  function handleDownload() {
     setStatus('loading');
     setErrorMsg('');
-    try {
-      const res = await fetch(`${API_BASE}/api/pdf/download`);
-      if (!res.ok) throw new Error(`Server responded with ${res.status}`);
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Breaking-Into-Africa-by-Prateek-Jain.pdf';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-      setStatus('done');
-    } catch (err) {
-      console.error('Download failed:', err);
-      setErrorMsg(err.message || 'Unknown error');
-      setStatus('error');
-    }
+    // Small delay to render the loading state, then trigger download
+    setTimeout(() => {
+      try {
+        const a = document.createElement('a');
+        a.href = `${API_BASE}/api/pdf/download`;
+        a.download = 'Breaking-Into-Africa-by-Prateek-Jain.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setStatus('done');
+      } catch (err) {
+        setErrorMsg('Could not start download. Please try again.');
+        setStatus('error');
+      }
+    }, 400);
   }
 
   return (
