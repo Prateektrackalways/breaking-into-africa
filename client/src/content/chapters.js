@@ -59,6 +59,9 @@ export const chapters = [
     intro: 'Africa\'s five regions each have distinct economic personalities, business cultures, and entry points. Understanding the map is the first step.',
     sections: [
       {
+        type: 'map',
+      },
+      {
         type: 'cards',
         heading: 'The Five Regions at a Glance',
         cards: [
