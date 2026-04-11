@@ -6,7 +6,7 @@ const adminAuth = require('../middleware/adminAuth');
 
 // POST /api/leads — capture a new lead
 router.post('/', async (req, res) => {
-  const { first_name, email, country } = req.body;
+  const { first_name, email, country, phone, interest } = req.body;
 
   if (!first_name || !email || !country) {
     return res.status(400).json({ error: 'All fields are required.' });
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     // Upsert — if email already exists, just return success so they can still access the ebook
     const { data, error } = await supabase
       .from('leads')
-      .upsert({ first_name, email, country }, { onConflict: 'email', ignoreDuplicates: false })
+      .upsert({ first_name, email, country, phone: phone || null, interest: interest || null }, { onConflict: 'email', ignoreDuplicates: false })
       .select()
       .single();
 
@@ -52,9 +52,9 @@ router.get('/admin', adminAuth, async (req, res) => {
 
   if (format === 'csv') {
     const csv = [
-      'id,first_name,email,country,created_at,has_downloaded',
+      'id,first_name,email,country,phone,interest,created_at,has_downloaded',
       ...data.map(r =>
-        `${r.id},"${r.first_name}","${r.email}","${r.country}",${r.created_at},${r.has_downloaded}`
+        `${r.id},"${r.first_name}","${r.email}","${r.country}","${r.phone || ''}","${r.interest || ''}",${r.created_at},${r.has_downloaded}`
       ),
     ].join('\n');
     res.setHeader('Content-Type', 'text/csv');

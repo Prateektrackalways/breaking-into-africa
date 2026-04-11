@@ -7,7 +7,13 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git branch:*)",
-      "Bash(git remote:*)"
+      "Bash(git remote:*)",
+      "Bash(git config:*)",
+      "Bash(git push:*)",
+      "Bash(node -e ':*)",
+      "Bash(node:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(git ls-tree:*)"
     ]
   }
 }

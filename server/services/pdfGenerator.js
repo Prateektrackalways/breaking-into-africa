@@ -18,12 +18,13 @@ async function generateEbookPdf() {
   const pdfBuffer = await page.pdf({
     format: 'A4',
     printBackground: true,
-    margin: { top: '20mm', bottom: '20mm', left: '18mm', right: '18mm' },
+    // Cover page (page 1) has no margins — body content pages have margins
+    margin: { top: '0', bottom: '0', left: '0', right: '0' },
     displayHeaderFooter: true,
     headerTemplate: '<div></div>',
     footerTemplate: `
-      <div style="font-size:9px;color:#888;width:100%;text-align:center;padding:0 18mm;">
-        prateek.africa &nbsp;|&nbsp; Breaking Into Africa &nbsp;|&nbsp; Page <span class="pageNumber"></span> of <span class="totalPages"></span>
+      <div style="font-size:9px;color:#888;width:100%;text-align:center;padding:0 18mm;box-sizing:border-box;">
+        <span class="pageNumber"></span>
       </div>`,
   });
 
@@ -42,25 +43,31 @@ function buildPdfHtml() {
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', Arial, sans-serif; color: #222; background: #fff; }
 
-  /* Cover page */
+  /* Cover page — full bleed image */
   .cover {
-    height: 100vh; min-height: 297mm;
-    background: linear-gradient(160deg, #1a4a2e 60%, #0d2e1c 100%);
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    text-align: center; padding: 60px 40px; page-break-after: always;
-    position: relative; overflow: hidden;
+    width: 210mm; height: 297mm;
+    page-break-after: always;
+    margin: 0; padding: 0;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    background: #0d1f13;
   }
-  .cover::before {
-    content: ''; position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23c9a84c' stroke-width='0.5' opacity='0.15'%3E%3Ccircle cx='400' cy='400' r='200'/%3E%3Ccircle cx='400' cy='400' r='300'/%3E%3Ccircle cx='400' cy='400' r='380'/%3E%3C/g%3E%3C/svg%3E") center/cover;
+  .cover img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center top;
+    display: block;
   }
-  .cover-tag { color: #c9a84c; font-size: 13px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; opacity: 0.9; }
-  .cover h1 { color: #fff; font-size: 38px; font-weight: 800; line-height: 1.2; margin-bottom: 16px; max-width: 560px; }
-  .cover h1 span { color: #c9a84c; }
-  .cover .subtitle { color: #a8d5b5; font-size: 17px; margin-bottom: 48px; max-width: 480px; line-height: 1.6; }
-  .cover-divider { width: 60px; height: 3px; background: #c9a84c; margin: 0 auto 40px; }
-  .cover-author { color: #fff; font-size: 18px; font-weight: 700; }
-  .cover-role { color: #c9a84c; font-size: 13px; letter-spacing: 1px; margin-top: 6px; }
+
+  /* About Author page */
+  .about { padding: 60px 40px; page-break-before: always; background: #fffaf0; }
+  .about-header { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a84c; font-weight: 700; margin-bottom: 24px; }
+  .about-flex { display: flex; gap: 32px; align-items: flex-start; }
+  .about-photo { width: 160px; height: 160px; object-fit: cover; border-radius: 12px; flex-shrink: 0; }
+  .about h2 { font-size: 26px; font-weight: 800; color: #1a4a2e; margin-bottom: 4px; }
+  .about-title { font-size: 13px; color: #c9a84c; font-weight: 600; margin-bottom: 16px; }
+  .about p { font-size: 13px; line-height: 1.85; color: #444; margin-bottom: 12px; }
+  .about-links { margin-top: 16px; font-size: 12px; color: #1a4a2e; }
+  .about-links div { margin-bottom: 4px; }
 
   /* TOC */
   .toc { padding: 60px 40px; page-break-after: always; }
@@ -85,14 +92,9 @@ function buildPdfHtml() {
 </head>
 <body>
 
-<!-- COVER -->
+<!-- COVER — full bleed image -->
 <div class="cover">
-  <div class="cover-tag">The Complete Guide</div>
-  <h1>Breaking Into <span>Africa</span></h1>
-  <div class="cover-divider"></div>
-  <div class="subtitle">The Complete Guide to Living, Working &amp; Building Business Across the Continent</div>
-  <div class="cover-author">Prateek Jain</div>
-  <div class="cover-role">Co-Founder at Trackalways &nbsp;·&nbsp; Building Businesses Across Borders</div>
+  <img src="https://guide.prateek.africa/assets/cover_hires.jpg" alt="Breaking Into Africa by Prateek Jain" />
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -118,6 +120,26 @@ function buildPdfHtml() {
 
 <!-- CHAPTERS -->
 ${getPdfChapters()}
+
+<!-- ABOUT THE AUTHOR -->
+<div class="about">
+  <div class="about-header">About the Author</div>
+  <div class="about-flex">
+    <img class="about-photo" src="https://guide.prateek.africa/assets/author_portrait_square.jpg" alt="Prateek Jain" />
+    <div>
+      <h2>Prateek Jain</h2>
+      <div class="about-title">Co-Founder at Trackalways · Nairobi, Kenya</div>
+      <p>Prateek Jain is an entrepreneur, builder, and cross-border operator based in Nairobi, Kenya. Originally from Bhopal, India, he moved to East Africa to build businesses at the intersection of technology, logistics, and services.</p>
+      <p>He is the Director and co-owner of <strong>Trackalways Ltd.</strong>, a GPS tracking and telematics company operating across Kenya and Uganda, and runs <strong>Anasa Living</strong> (serviced apartments in Nairobi) and <strong>Code Crumble</strong> (web development and SaaS tools).</p>
+      <p>With experience spanning cloud kitchens, printing, fresh produce trade, IoT hardware, and SaaS platforms — across India, Africa, the UAE, and beyond — Prateek has navigated the real challenges of building in emerging markets: regulatory hurdles, cross-border payments, hiring, cultural adaptation, and finding product-market fit on the ground.</p>
+      <p><em>"Breaking Into Africa" distils these hard-won lessons into a practical, no-fluff guide for entrepreneurs looking to enter or expand across the African continent.</em></p>
+      <div class="about-links">
+        <div>🌍 prateek.africa</div>
+        <div>📡 trackalways.com</div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>`;

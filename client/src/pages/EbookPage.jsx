@@ -4,6 +4,7 @@ import Sidebar from '../components/Ebook/Sidebar';
 import ProgressBar from '../components/Ebook/ProgressBar';
 import Chapter from '../components/Ebook/Chapter';
 import AfricaMap from '../components/Ebook/AfricaMap';
+import AboutAuthor from '../components/Ebook/AboutAuthor';
 import { useScrollProgress, useCompletedChapters } from '../hooks/useProgress';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
@@ -140,19 +141,28 @@ export default function EbookPage() {
           className="flex-1 overflow-y-auto"
         >
           <div className="max-w-3xl mx-auto px-4 sm:px-8 py-10 space-y-0">
-            {chapters.map((chapter, index) => (
+
+            {/* Cover splash */}
+            <div className="flex justify-center py-8 border-b border-gray-200 mb-4">
+              <img
+                src="/assets/cover_web.png"
+                alt="Breaking Into Africa ebook cover by Prateek Jain"
+                className="w-full max-w-xs rounded-sm"
+                style={{ boxShadow: '0 20px 50px rgba(0,0,0,0.25), 0 6px 15px rgba(0,0,0,0.15)', borderRadius: '4px' }}
+              />
+            </div>
+
+            {chapters.map((chapter) => (
               <div key={chapter.id}>
                 {chapter.id === 'regions' && (
-                  <div className="mb-8">
-                    <AfricaMap />
-                  </div>
+                  <div className="mb-8"><AfricaMap /></div>
                 )}
-                <Chapter
-                  chapter={chapter}
-                  isCompleted={completed.includes(chapter.id)}
-                />
+                <Chapter chapter={chapter} isCompleted={completed.includes(chapter.id)} />
               </div>
             ))}
+
+            {/* About the Author — last section */}
+            <AboutAuthor />
           </div>
 
           {/* Footer */}
