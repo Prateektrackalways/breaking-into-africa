@@ -146,6 +146,8 @@ td:first-child{font-weight:600;color:#1a4a2e;}
 const AFRICA_MAP_SVG = `
 <div style="margin:14px 0 20px;">
   <div style="font-size:14px;font-weight:700;color:#1a4a2e;margin-bottom:10px;">Africa — Regional Business Map</div>
+  <img src="https://guide.prateek.africa/assets/africa_map.jpg" alt="Africa Regional Business Map" style="width:100%;max-width:680px;display:block;margin:0 auto;border-radius:10px;border:1px solid #dde3ec;"/>
+  <div style="display:none;"><!-- old SVG replaced with image -->
   <svg viewBox="0 0 780 820" style="width:100%;max-width:680px;display:block;margin:0 auto;background:#eef2f7;border-radius:10px;border:1px solid #dde3ec;">
     <!-- NORTH AFRICA -->
     <polygon points="90,85 135,75 155,85 160,115 145,130 110,135 85,120 80,100" fill="#7b3fa0" stroke="white" stroke-width="0.8"/>
@@ -250,6 +252,7 @@ const AFRICA_MAP_SVG = `
     <rect x="490" y="760" width="12" height="12" rx="2" fill="#1a5a8a"/>
     <text x="506" y="770" font-size="8.5" fill="#444" font-family="Arial">Southern Africa</text>
   </svg>
+  </div>
 </div>`;
 
 // ─────────────────────────────────────────────
