@@ -7,12 +7,12 @@ import AfricaMap from '../components/Ebook/AfricaMap';
 import AboutAuthor from '../components/Ebook/AboutAuthor';
 import { useScrollProgress, useCompletedChapters } from '../hooks/useProgress';
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://ebook-api-p981.onrender.com').replace(/\/api$/, '');
 
 export default function EbookPage() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeChapter, setActiveChapter] = useState(chapters[0].id);
-  const [downloading, setDownloading] = useState(false);
+  const [downloading] = useState(false);
   const contentRef = useRef(null);
   const progress = useScrollProgress();
   const { completed, markComplete } = useCompletedChapters();
@@ -51,24 +51,9 @@ export default function EbookPage() {
     setSidebarOpen(false);
   }
 
-  async function handleDownload() {
-    setDownloading(true);
-    try {
-      const emailParam = userEmail ? `?email=${encodeURIComponent(userEmail)}` : '';
-      const res = await fetch(`${API_BASE}/pdf/download${emailParam}`);
-      if (!res.ok) throw new Error('PDF generation failed');
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Breaking-Into-Africa-by-Prateek-Jain.pdf';
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      alert('PDF download failed. Please try again.');
-    } finally {
-      setDownloading(false);
-    }
+  function handleDownload() {
+    const emailParam = userEmail ? `?email=${encodeURIComponent(userEmail)}` : '';
+    window.open(`${API_BASE}/api/pdf/download${emailParam}`, '_blank');
   }
 
   return (
