@@ -80,7 +80,7 @@ export default function LandingPage() {
     setError('');
     const phone = form.phone_number ? `${form.phone_code}${form.phone_number}` : '';
     try {
-      const res = await fetch(`${API_BASE}/leads`, {
+      const res = await fetch(`${API_BASE}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
