@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://ebook-api-p981.onrender.com';
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://ebook-api-p981.onrender.com').replace(/\/api$/, '');
 const CLIENT_URL = import.meta.env.VITE_CLIENT_URL || 'https://guide.prateek.africa';
 
 export default function DownloadPage() {

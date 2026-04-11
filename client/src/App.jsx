@@ -5,7 +5,7 @@ import EbookPage from './pages/EbookPage';
 import DownloadPage from './pages/DownloadPage';
 import AdminPage from './pages/AdminPage';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'https://ebook-api-p981.onrender.com';
+const API_BASE = (import.meta.env.VITE_API_URL || 'https://ebook-api-p981.onrender.com').replace(/\/api$/, '');
 
 function hasAccess() {
   return sessionStorage.getItem('ebook_access') === 'true';
