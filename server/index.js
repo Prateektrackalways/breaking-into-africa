@@ -15,6 +15,7 @@ app.use(express.json());
 
 app.use('/api/leads', leadsRouter);
 app.use('/api/pdf', pdfRouter);
+app.use('/api/analytics', require('./routes/analytics'));
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
